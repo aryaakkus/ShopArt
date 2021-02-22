@@ -24,10 +24,6 @@ export interface CartItem {
     quantity: number;
 }
 
-export interface EmailVerificator {
-    email: string;
-}
-
 export interface Item {
     artistEmail: string;
     itemName: string;

@@ -11,12 +11,14 @@ const app = express();
 app.use(cookieParser());
 app.use(express.json());
 
-// log incoming requests for debugging
+// Log incoming requests for debugging
 app.use(logRequest);
 
+// Route handlers
 app.use("/user", userRouter);
 app.use("/item", itemRouter);
 
+// home page route
 app.get("/", (req, res) => {
     res.send("hello");
 });

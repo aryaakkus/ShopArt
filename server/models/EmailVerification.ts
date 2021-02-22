@@ -1,15 +1,14 @@
 import { User } from "./types";
-import { EmailVerificator } from "./types";
 import sgMail from "@sendgrid/mail";
 import { uuid } from "uuidv4";
 import admin from "firebase-admin";
 
-sgMail.setApiKey(process.env.SENDGRID_API_KEY as string);
 const db = admin.firestore();
 
 export default class EmailVerification {
     private static verificationRef = db.collection("UserEmailVerification");
 
+    // Sends verification email that contains verify path to user
     public static async sendVerificationEmail(email: string) {
         const uid = uuid();
         sgMail.send({
@@ -23,11 +22,11 @@ export default class EmailVerification {
         });
         this.verificationRef.doc(uid).set({ email });
     }
-
+    // Checks if the verification is valid, returns the email to be verified
     public static async verifyEmail(uid: string) {
         const docRef = await this.verificationRef.doc(uid).get();
         if (docRef.exists) {
-            return <EmailVerificator>docRef.data();
+            return <string>(docRef.data() as any).email;
         } else {
             throw Error("This verification UUID cannot be found!");
         }

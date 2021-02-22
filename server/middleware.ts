@@ -12,6 +12,9 @@ export function logRequest(
     next();
 }
 
+/**
+ * @desc Middleware to verify jwt
+ * */
 export function verifyJwtToken(
     req: express.Request,
     res: express.Response,
